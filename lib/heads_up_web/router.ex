@@ -8,10 +8,16 @@ defmodule HeadsUpWeb.Router do
     plug :put_root_layout, html: {HeadsUpWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug HeadsUp.Snoop
+    plug :spy
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  def spy(conn, _opts) do
+    IO.inspect(conn)
   end
 
   scope "/", HeadsUpWeb do
